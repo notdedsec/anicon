@@ -19,21 +19,27 @@ If enabled, the script will automatically select the first item from the search 
 #### Blank Input
 If you're not using AutoMode, you can give a blank input when you're asked to choose and it'll pick the first item from search results. This way, you can save a few keystrokes, just hitting the Enter Key instead of typing '1' and then Enter. The anime you're looking for is most often the first one in the results.
 
-## Okay so i did everything, but the icons aren't showing up. *panicks*
+### Okay so i did everything, but the icons aren't showing up. **panicks**
 Your PC may take some time to index those icons. They should show up in 2 to 5 minutes. I guess.
 
-## Alright. It works but I'm curious as to how? :thinking:
-It
+### Alright. It works but I'm curious as to how?
+It, uhhh
 - Gets the Anime Name from the Folder Name
 - Searches that name on MAL with Jikan API
 - Asks you to choose the anime from results
 - Gets the artwork and converts it into an icon
 - Makes a `desktop.ini` file which sets the folder icon.
 
-## I don't like these icons. How do i remove them?
+### I don't like these icons. How do i remove them?
 To remove the cover icon from a folder, you just need to delete the `.ico` and `desktop.ini ` file from the folder. These files are hidden so make sure you have `Show Hidden Items` option ticked. You can just search and delete them all if you wanna batch remove all icons. But why would you wanna do that anyway?
 
-## I was promised memes. Gib memes.
+### Any Tips or Suggestions?
+Yeah, the most efficient way to use this (imo) would be to:
+- Run it in AutoMode first so all folders are processed
+- Move out the incorrectly tagged folders and delete their icons
+- Run it in ManualMode and choose the correct results
+
+### I was promised memes. Gib memes.
 Alright here you go.
 
 ![meme](https://i.imgur.com/BXX93Rs.jpg)

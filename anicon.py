@@ -1,14 +1,19 @@
-import subprocess, warnings, requests, json, time, re, os
+from warnings import filterwarnings
 from PIL import Image, ImageOps
 from jikanpy import Jikan
+from requests import get
+from time import sleep
+import re
+import os
 
-input('''Run this in your anime folder
+print('''Run this in your anime folder
 For help, info and memes, check out
 https://github.com/notdedsec/anicon
 ''')
 
+sleep(1)
 jikan = Jikan()
-warnings.filterwarnings("ignore")
+filterwarnings("ignore")
 folderlist = next(os.walk('.'))[1]
 automode = True if input('Use AutoMode? Y/N : ').upper() == 'Y' else False
 
@@ -59,10 +64,7 @@ def getartwork(name):
 
 def createicon(folder, link):
 
-    art = requests.get(link)
-    iconname = name.replace(' ', '_')
-    jpgfile = folder + '\\' + iconname + '.jpg'
-    icofile = folder + '\\' + iconname + '.ico'
+    art = get(link)
     open(jpgfile, 'wb').write(art.content)
 
     img = Image.open(jpgfile)
@@ -86,7 +88,16 @@ def createicon(folder, link):
 for folder in folderlist:
 
     name = getname(folder)
+
+    iconname = name.replace(' ', '_')
+    jpgfile = folder + '\\' + iconname + '.jpg'
+    icofile = folder + '\\' + iconname + '.ico'
+    
+    if os.path.isfile(icofile):
+        continue
+
     link = getartwork(name)
+    
     try:
         icon = createicon(folder, link)
     except:
