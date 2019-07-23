@@ -3,7 +3,7 @@ Add cover art from MAL as folder icons to your anime collection.
 
 ### How do I use this?
 
-- Download the executable from [here](https://github.com/notdedsec/anicon/releases/download/v1.0/anicon.exe)
+- Download the executable from [here](https://github.com/notdedsec/anicon/releases)
 - Run it in your anime folder
 - Choose when you're asked to
 - Repeat till all folders are processed
