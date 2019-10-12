@@ -16,8 +16,8 @@ jikan = Jikan()
 filterwarnings("ignore")
 folderlist = next(os.walk('.'))[1]
 if folderlist is None or len(folderlist) == 0:
-    # In case the file is placed inside the inner most directory, the list will be empty.
-    # Thus adding the current directory as the sole entry for the list
+    # In case the file is placed inside an inner most directory which contains only files and no other folders, this list will be empty.
+    # Thus adding the current directory path as an element of the list.
     folderlist = [str(os.getcwd())]
 automode = True if input('Use AutoMode? Y/N : ').upper() == 'Y' else False
 
@@ -66,7 +66,7 @@ def getartwork(name: str) -> tuple:
 
     return (results['results'][int(ch)-1]['image_url'], results['results'][int(ch)-1]['type'])
 
-def createicon(folder, link):
+def createicon(folder: str, link: str):
 
     art = get(link)
     open(jpgfile, 'wb').write(art.content)
@@ -104,7 +104,6 @@ for folder in folderlist:
         print('An icon is already present. Delete the older icon and `desktop.ini` file before applying a new icon')
         continue
 
-    print(name, iconname, sep='\n')
     link, Type = getartwork(name)
     
     try:
@@ -123,7 +122,7 @@ for folder in folderlist:
         # If the result has a type, then using this as the infotip for the desktop icon.
         f.write("\nInfoTip={}".format(Type))
 
-    # Closing the output stream. All the text will be written into the file only when the output is being closed.
+    # Closing the output stream. All the text will be written into `desktop.ini` file only when the output is being closed.
     f.close()
 
     # Not marking the `desktop.ini` file as a system file. This will make sure that the file can be seen if display hidden items is enabled.
