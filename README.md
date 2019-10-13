@@ -45,14 +45,6 @@ There is another method to permanently attach the icon to the folder, but it'll 
 - Once there, simply press '`Okay`' and close the dialog. 
 - By now the folder should have an icon and '`dekstop.ini` should be gone if not, you probably missed a step above.
 
-### How do I get rid of this permanent folder icon if required.
-If you followed the steps above, the folder should have an icon by now and the `desktop.ini` should be gone from the folder. Windows has now converted the `desktop.ini` file into a System file (which is hard to access and even harder to delete).
-
-If you want to remove the folder icon, then here are some ways:
-- Search for how to show system files. Once the file is visible, simply delete it.
-- Alternatively, the `desktop.ini` can be directly deleted using a Shell terminal or any other terminal. Tested this in Bash terminal, Windows command prompt might now allow it.
-- Or if you want an even simpler method: Make a file named `desktop.ini` in any other folder. Now, copy and paste this file into the folder that has permanent icon. You'll be asked if you want to replace the existing file. Choose yes. This will remove the desktop icon and make `desktop.ini` visible. If you want, you can delete the `desktop.ini` file if you want to.
-
 ### Alright. It works but I'm curious as to how?
 It, uhhh
 - Gets the Anime Name from the Folder Name
@@ -63,6 +55,15 @@ It, uhhh
 
 ### I don't like these icons. How do I remove them?
 To remove the cover icon from a folder, you just need to delete the `.ico` and `desktop.ini ` file from the folder. These files are hidden so make sure you have `Show Hidden Items` option ticked. You can just search and delete them all if you wanna batch remove all icons. But why would you wanna do that anyway?
+
+#### How do I get rid of the permanent folder icon?
+If you followed the steps above, the folder should have an icon by now and the `desktop.ini` should be gone from the folder. The `desktop.ini` has been converted into a System file.
+
+If you want to remove the folder icon, then here are some ways:
+- Enable 'show system files'. Once `desktop.ini` file is visible, simply delete it.
+- Alternatively, `desktop.ini` can be directly deleted using a Shell terminal or any other terminal. Tested this in Bash terminal, Windows command prompt might now allow it.
+- Or an even simpler method: Make a file named `desktop.ini` in any other folder. Now, copy and paste this file into the folder that has permanent icon. You'll be asked if you want to replace the existing file. Choose yes. This will remove the desktop icon and make `desktop.ini` visible. If you want, you can delete the `desktop.ini` file if you want to.
+
 
 ### Any Tips or Suggestions?
 Yeah, the most efficient way to use this (imo) would be to:
