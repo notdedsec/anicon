@@ -64,11 +64,14 @@ def get_artwork(anime_name: str, max_results: int = 5, mode: str = "mal-api") ->
             counter += 1
     else:
         raise Exception("Invalid mode specified")
+    print("\nX - Skip this folder")
 
     if not auto_mode:
-        choice = input('\n>')
+        choice = input('>')
         if choice == '':
             choice = 1
+        elif choice.upper() == "X":
+            return None, None
         choice = int(choice) - 1
 
     image_url = results['results'][choice]['image_url'] if mode == "jikanpy" else results[choice].image_url
@@ -147,6 +150,9 @@ https://github.com/notdedsec/anicon
             continue
 
         link, artwork_type = get_artwork(name, max_results=max_res, mode=lib_mode)
+        if not link or not artwork_type:
+            print("Skipping this folder...")
+            continue
 
         try:
             icon = create_icon(link)
