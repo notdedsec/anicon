@@ -1,0 +1,5 @@
+jikanpy
+requests
+pillow
+mal-api
+pyinstaller
