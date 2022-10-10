@@ -1,13 +1,14 @@
+import os
+import re
+from warnings import filterwarnings
+
+from PIL import Image, ImageOps
 from jikanpy import Jikan
 from mal import AnimeSearch
-from PIL import Image, ImageOps
 from requests import get
-from time import sleep
-from warnings import filterwarnings
-import re
-import os
 
 filterwarnings("ignore")
+jikan = Jikan()
 
 
 def get_name(folder_name: str) -> str:
@@ -32,7 +33,7 @@ def get_name(folder_name: str) -> str:
 
 
 def get_artwork(anime_name: str, max_results: int = 5, mode: str = "mal-api") -> tuple:
-    print('\n' + anime_name.title(), end='')
+    print('\n' + anime_name.title())
 
     counter, choice = 1, 0
     if mode == "mal-api":
@@ -43,13 +44,12 @@ def get_artwork(anime_name: str, max_results: int = 5, mode: str = "mal-api") ->
                 choice = 1
                 break
             else:
-                print('\n' + str(counter) + ' - ' + result.title, end='')
+                print(str(counter) + ' - ' + result.title)
 
             if counter == max_results:
                 break
             counter += 1
     elif mode == "jikanpy":
-        jikan = Jikan()
         results = jikan.search('anime', anime_name, parameters={'type': 'tv'})
         for result in results['results']:
             if auto_mode:
@@ -57,17 +57,17 @@ def get_artwork(anime_name: str, max_results: int = 5, mode: str = "mal-api") ->
                 choice = 1
                 break
             else:
-                print('\n' + str(counter) + ' - ' + result['title'], end='')
+                print(str(counter) + ' - ' + result['title'])
 
             if counter == max_results:
                 break
             counter += 1
     else:
         raise Exception("Invalid mode specified")
-    print("\nX - Skip this folder")
+    print("X - Skip this folder")
 
     if not auto_mode:
-        choice = input('>')
+        choice = input('> ')
         if choice == '':
             choice = 1
         elif choice.upper() == "X":
@@ -104,8 +104,8 @@ def create_icon(img_link: str):
 
 
 if __name__ == "__main__":
-    print(
-        """Run this in your anime folder
+    print("""\
+Run this in your anime folder
 For help, info and memes, check out
 https://github.com/notdedsec/anicon
 """)
@@ -115,17 +115,17 @@ https://github.com/notdedsec/anicon
         max_res = int(max_res)
     except ValueError:
         max_res = 5
-    lib_mode = input(
-        """Image Source Library:
-1. Jikanpy (default)
-2. mal-api
-""")
-    if lib_mode == "2":
-        lib_mode = "mal-api"
-    else:
-        lib_mode = "jikanpy"
 
-    sleep(0.5)
+    lib_mode = input("""\
+
+Image Source Library:
+1. mal-api (default)
+2. Jikanpy
+> """)
+    if lib_mode == "2":
+        lib_mode = "jikanpy"
+    else:
+        lib_mode = "mal-api"
 
     folder_list = next(os.walk('.'))[1]
     if folder_list is None or len(folder_list) == 0:
@@ -159,6 +159,7 @@ https://github.com/notdedsec/anicon
         except Exception as e:
             print('Ran into an error. Blame the dev :(')
             print(e)
+            input("Enter anything to exit... ")
             continue
 
         f = open(folder + "\\desktop.ini", "w+")
