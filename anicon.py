@@ -1,9 +1,11 @@
 import os
 import re
+import traceback
 from warnings import filterwarnings
 
 from PIL import Image, ImageOps
 from jikanpy import Jikan
+# noinspection PyPackageRequirements
 from mal import AnimeSearch
 from requests import get
 
@@ -141,11 +143,11 @@ Image Source Library:
         # now performing a search for the directory name.
         name = name.rpartition('\\')[2].strip()
 
-        icon_name = name.replace(' ', '_')
+        icon_name = re.sub("[^A-Za-z0-9_,. ()-]", "_", name)
         jpg_file = folder + '\\' + icon_name + '.jpg'
         ico_file = folder + '\\' + icon_name + '.ico'
 
-        if os.path.isfile(ico_file):
+        if os.path.isfile(folder + "\\" + "desktop.ini"):
             print('An icon is already present. Delete the older icon and `desktop.ini` file before applying a new icon')
             continue
 
@@ -157,27 +159,33 @@ Image Source Library:
         try:
             icon = create_icon(link)
         except Exception as e:
-            print('Ran into an error. Blame the dev :(')
-            print(e)
-            input("Enter anything to exit... ")
+            print('Ran into an error while creating the icon object. Blame the dev :(')
+            for line in traceback.format_exception(None, e, e.__traceback__):
+                print(line, end="")
             continue
 
-        f = open(folder + "\\desktop.ini", "w+")
+        try:
+            f = open(folder + "\\desktop.ini", "w+")
 
-        f.write("[.ShellClassInfo]\nConfirmFileOp=0\n")
-        f.write("IconResource={},0".format(ico_file.replace(folder, "").strip("\\")))
-        f.write("\nIconFile={}\nIconIndex=0".format(ico_file.replace(folder, "").strip("\\")))
+            f.write("[.ShellClassInfo]\nConfirmFileOp=0\n")
+            f.write("IconResource={},0".format(ico_file.replace(folder, "").strip("\\")))
+            f.write("\nIconFile={}\nIconIndex=0".format(ico_file.replace(folder, "").strip("\\")))
 
-        if artwork_type is not None and len(artwork_type) > 0:
-            # If the result has a type, then using this as the info-tip for the desktop icon.
-            f.write("\nInfoTip={}".format(artwork_type))
+            if artwork_type is not None and len(artwork_type) > 0:
+                # If the result has a type, then using this as the info-tip for the desktop icon.
+                f.write("\nInfoTip={}".format(artwork_type))
 
-        # Closing the output stream.
-        # All the text will be written into `desktop.ini` file only when the output is being closed.
-        f.close()
+            # Closing the output stream.
+            # All the text will be written into `desktop.ini` file only when the output is being closed.
+            f.close()
 
-        # Not marking the `desktop.ini` file as a system file.
-        # This will make sure that the file can be seen if display hidden items is enabled.
-        os.system('attrib +r \"{}\\{}\"'.format(os.getcwd(), folder))
-        os.system('attrib +h \"{}\\desktop.ini\"'.format(folder))
-        os.system('attrib +h \"{}\"'.format(icon))
+            # Not marking the `desktop.ini` file as a system file.
+            # This will make sure that the file can be seen if display hidden items is enabled.
+            os.system('attrib +r \"{}\\{}\"'.format(os.getcwd(), folder))
+            os.system('attrib +h \"{}\\desktop.ini\"'.format(folder))
+            os.system('attrib +h \"{}\"'.format(icon))
+        except Exception as e:
+            print('Ran into an error while creating files. Blame the dev :(')
+            for line in traceback.format_exception(None, e, e.__traceback__):
+                print(line, end="")
+            continue
